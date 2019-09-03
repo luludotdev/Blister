@@ -19,5 +19,8 @@ namespace Blister.Types
 
         [JsonProperty("bytes", NullValueHandling = NullValueHandling.Ignore)]
         public byte[] Bytes { get; set; }
+
+        [JsonProperty("levelID", NullValueHandling = NullValueHandling.Ignore)]
+        public string LevelID { get; set; }
     }
 }
