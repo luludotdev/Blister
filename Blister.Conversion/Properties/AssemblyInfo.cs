@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Blister")]
-[assembly: AssemblyDescription("Beat Saber playlist handling Library")]
+[assembly: AssemblyTitle("Blister.Conversion")]
+[assembly: AssemblyDescription("Beat Saber playlist conversion Library")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Jack Baron DEV")]
-[assembly: AssemblyProduct("Blister")]
+[assembly: AssemblyProduct("Blister.Conversion")]
 [assembly: AssemblyCopyright("Copyright © Jack Baron DEV 2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -21,7 +21,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1555b0d2-112f-4501-9e65-7692e9920322")]
+[assembly: Guid("be35dbc0-a6ac-41c2-875c-fd43e5335586")]
 
 // Version information for an assembly consists of the following four values:
 //

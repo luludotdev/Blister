@@ -1,9 +1,12 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blister", "Blister\Blister.csproj", "{1555B0D2-112F-4501-9E65-7692E9920322}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blister.Conversion", "Blister.Conversion\Blister.Conversion.csproj", "{BE35DBC0-A6AC-41C2-875C-FD43E5335586}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlisterLoader", "BlisterLoader\BlisterLoader.csproj", "{2E2454A3-47B7-4E30-B6FD-2508DC84592C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +18,14 @@ Global
 		{1555B0D2-112F-4501-9E65-7692E9920322}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1555B0D2-112F-4501-9E65-7692E9920322}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1555B0D2-112F-4501-9E65-7692E9920322}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE35DBC0-A6AC-41C2-875C-FD43E5335586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE35DBC0-A6AC-41C2-875C-FD43E5335586}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE35DBC0-A6AC-41C2-875C-FD43E5335586}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE35DBC0-A6AC-41C2-875C-FD43E5335586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E2454A3-47B7-4E30-B6FD-2508DC84592C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E2454A3-47B7-4E30-B6FD-2508DC84592C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E2454A3-47B7-4E30-B6FD-2508DC84592C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E2454A3-47B7-4E30-B6FD-2508DC84592C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

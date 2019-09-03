@@ -1,17 +1,16 @@
-using System.Resources;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Blister")]
-[assembly: AssemblyDescription("Beat Saber playlist handling Library")]
+[assembly: AssemblyTitle("BlisterLoader")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jack Baron DEV")]
-[assembly: AssemblyProduct("Blister")]
-[assembly: AssemblyCopyright("Copyright © Jack Baron DEV 2019")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("BlisterLoader")]
+[assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -21,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1555b0d2-112f-4501-9e65-7692e9920322")]
+[assembly: Guid("2e2454a3-47b7-4e30-b6fd-2508dc84592c")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,7 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.1.0.0")]
-[assembly: AssemblyFileVersion("0.1.0.0")]
-[assembly: NeutralResourcesLanguage("en-GB")]
-
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
