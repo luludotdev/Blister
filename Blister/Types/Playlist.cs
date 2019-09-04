@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Blister.Types
@@ -18,6 +19,6 @@ namespace Blister.Types
         public byte[] Cover { get; set; }
 
         [JsonProperty("maps")]
-        public Beatmap[] Maps { get; set; }
+        public List<Beatmap> Maps { get; set; }
     }
 }
