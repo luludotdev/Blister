@@ -39,12 +39,19 @@ namespace Blister.Conversion
                 if (song.Hash != null)
                 {
                     map.Type = "hash";
-                    map.Hash = song.Hash;
+
+                    string hash = song.Hash.ToLower();
+                    bool isValid = Utils.ValidHash(hash);
+                    if (!isValid) throw new InvalidMapHashException(hash);
+
+                    map.Hash = song.Hash.ToLower();
                 }
                 else if (song.Key != null)
                 {
                     map.Type = "key";
-                    map.Key = Utils.ParseKey(song.Key);
+
+                    string key = Utils.ParseKey(song.Key);
+                    map.Key = key ?? throw new InvalidMapKeyException(song.Key);
                 }
                 else if (song.LevelID != null)
                 {
