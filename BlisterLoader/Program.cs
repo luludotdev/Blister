@@ -22,13 +22,13 @@ namespace BlisterLoader
             }
 
             string text = File.ReadAllText(path);
-            var legacy = PlaylistConverter.LoadLegacyPlaylist(text);
+            var legacy = PlaylistConverter.DeserializeLegacyPlaylist(text);
             var playlist = PlaylistConverter.ConvertLegacyPlaylist(legacy);
 
             string newPath = path.Replace(".bplist", ".blist");
             using (FileStream fs = File.Open(newPath, FileMode.OpenOrCreate))
             {
-                using (MemoryStream ms = PlaylistLib.SaveStream(playlist))
+                using (MemoryStream ms = PlaylistLib.SerializeStream(playlist))
                 {
                     ms.CopyTo(fs);
                     fs.Flush();

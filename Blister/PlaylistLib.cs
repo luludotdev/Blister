@@ -7,17 +7,30 @@ using Blister.Types;
 
 namespace Blister
 {
+    /// <summary>
+    /// Main methods for Serializing / Deserializing Playlists
+    /// </summary>
     public static class PlaylistLib
     {
-        public static Playlist Load(byte[] bytes)
+        /// <summary>
+        /// Deserialize BSON bytes to a Playlist struct 
+        /// </summary>
+        /// <param name="bytes">BSON bytes</param>
+        /// <returns></returns>
+        public static Playlist Deserialize(byte[] bytes)
         {
             using (MemoryStream ms = new MemoryStream(bytes))
             {
-                return Load(ms);
+                return Deserialize(ms);
             }
         }
 
-        public static Playlist Load(Stream stream)
+        /// <summary>
+        /// Deserialize a BSON byte stream to a Playlist struct 
+        /// </summary>
+        /// <param name="stream">Byte Stream</param>
+        /// <returns></returns>
+        public static Playlist Deserialize(Stream stream)
         {
             using (GZipStream gzip = new GZipStream(stream, CompressionMode.Decompress))
             {
@@ -29,15 +42,25 @@ namespace Blister
             }
         }
 
-        public static byte[] Save(Playlist playlist)
+        /// <summary>
+        /// Serialize a playlist struct to a byte array
+        /// </summary>
+        /// <param name="playlist">Playlist struct</param>
+        /// <returns></returns>
+        public static byte[] Serialize(Playlist playlist)
         {
-            using (MemoryStream ms = SaveStream(playlist))
+            using (MemoryStream ms = SerializeStream(playlist))
             {
                 return ms.ToArray();
             }
         }
 
-        public static MemoryStream SaveStream(Playlist playlist)
+        /// <summary>
+        /// Serialize a playlist struct to a Memory Stream
+        /// </summary>
+        /// <param name="playlist">Playlist struct</param>
+        /// <returns></returns>
+        public static MemoryStream SerializeStream(Playlist playlist)
         {
             using (MemoryStream ms = new MemoryStream())
             {

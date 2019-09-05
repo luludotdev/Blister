@@ -7,19 +7,37 @@ using Blister.Conversion.Types;
 
 namespace Blister.Conversion
 {
+    /// <summary>
+    /// Main methods for Deserializing legacy playlists
+    /// </summary>
     public static class PlaylistConverter
     {
-        public static LegacyPlaylist LoadLegacyPlaylist(byte[] bytes)
+        /// <summary>
+        /// Deserialize legacy playlist JSON
+        /// </summary>
+        /// <param name="bytes">Legacy playlist JSON bytes</param>
+        /// <returns></returns>
+        public static LegacyPlaylist DeserializeLegacyPlaylist(byte[] bytes)
         {
             string text = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            return LoadLegacyPlaylist(text);
+            return DeserializeLegacyPlaylist(text);
         }
 
-        public static LegacyPlaylist LoadLegacyPlaylist(string text)
+        /// <summary>
+        /// Deserialize legacy playlist JSON
+        /// </summary>
+        /// <param name="text">Legacy playlist JSON text</param>
+        /// <returns></returns>
+        public static LegacyPlaylist DeserializeLegacyPlaylist(string text)
         {
             return JsonConvert.DeserializeObject<LegacyPlaylist>(text);
         }
 
+        /// <summary>
+        /// Convert a legacy playlist to a v2 playlist struct
+        /// </summary>
+        /// <param name="legacy">Legacy playlist</param>
+        /// <returns></returns>
         public static Playlist ConvertLegacyPlaylist(LegacyPlaylist legacy)
         {
             Playlist playlist = new Playlist
