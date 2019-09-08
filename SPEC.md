@@ -2,7 +2,7 @@
 
 ## File Encoding
 The playlist data is serialized using [BSON](http://bsonspec.org/), and then compressed using the [GZip](https://www.gzip.org/) format.  
-Before the GZipped data is the file's Magic Number, 8 bytes that are UTF-8 encoded text `Blist.v2`  
+Before the GZipped data is the file's Magic Number, 8 bytes that are UTF-8 (or ASCII) encoded text `Blist.v2`  
 The extension for playlist files is `.blist`
 
 ## BSON Structure
