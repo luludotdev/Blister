@@ -1,6 +1,8 @@
 using System;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using Blister.Types;
@@ -12,6 +14,15 @@ namespace Blister
     /// </summary>
     public static class PlaylistLib
     {
+        private static readonly string MagicNumberString = "Blist.v2";
+
+        /// <summary>
+        /// Blister format Magic Number
+        /// <br />
+        /// UTF-8 Encoded "Blist.v2"
+        /// </summary>
+        public static readonly byte[] MagicNumber = Encoding.UTF8.GetBytes(MagicNumberString);
+
         /// <summary>
         /// Deserialize BSON bytes to a Playlist struct 
         /// </summary>
@@ -25,6 +36,24 @@ namespace Blister
             }
         }
 
+        private static Stream ReadMagicNumber(Stream stream)
+        {
+            byte[] magicBytes = new byte[MagicNumber.Length];
+
+            for (int i = 0; i < magicBytes.Length; i++)
+            {
+                magicBytes[i] = (byte)stream.ReadByte();
+            }
+
+            bool hasMagicNumber = magicBytes.SequenceEqual(MagicNumber);
+            if (!hasMagicNumber)
+            {
+                throw new InvalidMagicNumberException();
+            }
+
+            return stream;
+        }
+
         /// <summary>
         /// Deserialize a BSON byte stream to a Playlist struct 
         /// </summary>
@@ -32,12 +61,15 @@ namespace Blister
         /// <returns></returns>
         public static Playlist Deserialize(Stream stream)
         {
-            using (GZipStream gzip = new GZipStream(stream, CompressionMode.Decompress))
+            using (Stream magic = ReadMagicNumber(stream))
             {
-                using (BsonDataReader reader = new BsonDataReader(gzip))
+                using (GZipStream gzip = new GZipStream(magic, CompressionMode.Decompress))
                 {
-                    JsonSerializer serializer = new JsonSerializer();
-                    return serializer.Deserialize<Playlist>(reader);
+                    using (BsonDataReader reader = new BsonDataReader(gzip))
+                    {
+                        JsonSerializer serializer = new JsonSerializer();
+                        return serializer.Deserialize<Playlist>(reader);
+                    }
                 }
             }
         }
@@ -72,7 +104,10 @@ namespace Blister
                         serializer.Serialize(writer, playlist);
                     }
 
-                    return new MemoryStream(ms.ToArray());
+                    byte[] gzipped = ms.ToArray();
+                    byte[] full = MagicNumber.Concat(gzipped).ToArray();
+
+                    return new MemoryStream(full);
                 }
             }
         }
