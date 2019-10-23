@@ -1,0 +1,22 @@
+name: .NET Build
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup MSBuild
+      uses: warrenbuckley/Setup-MSBuild@v1
+    - name: Install dependencies
+      run: msbuild -t:restore
+    - name: Build solution
+      run: msbuild Blister.sln /t:Build /p:Configuration=Release /m
+    - name: Cleanup releases
+      shell: bash
+      run: find "Blister.Conversion/bin/Release" -type f ! -name "Blister.*" -delete
+    - name: Upload Blister
+      uses: actions/upload-artifact@v1
+      with:
+        name: Blister-${{ github.sha }}
+        path: ./Blister.Conversion/bin/Release

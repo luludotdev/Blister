@@ -1,4 +1,4 @@
-# Blister
+# Blister &nbsp;[![Actions Status](https://github.com/lolPants/Blister/workflows/.NET%20Build/badge.svg)](https://github.com/lolPants/Blister/actions)
 _Beat Saber playlist handling Library._
 
 ## About
