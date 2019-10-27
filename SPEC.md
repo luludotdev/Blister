@@ -21,17 +21,17 @@ The extension for playlist files is `.blist`
 | `type` | `int enum` | See [Beatmap Types](#beatmap-types) for valid enum values |
 | `dateAdded` | `date` | Date when this map was added to the playlist |
 | `key` | `int` | Only present when `type == "key"` |
-| `hash` | `binary` | Only present when `type == "hash"` |
+| `hash` | `byte[20]` | Only present when `type == "hash"` |
 | `bytes` | `binary` | Only present when `type == "zip"` |
 | `levelID` | `string` | Only present when `type == "levelID"` |
 
 ### Beatmap Types
 | Type | Usage |
 | - | - |
-| `1` | Uses a [BeatSaver key](#beatsaver-key-format) to reference a beatmap |
-| `2` | Uses a [Beatmap hash](#beatmap-hash-format) to reference a beatmap |
-| `3` | Embeds a [Beatmap zip](#beatmap-zips) in the playlist |
-| `4` | Uses a Level ID to reference a beatmap.<br />For custom beatmaps this is derived from the hash, so it is preferred to use `hash`<br />This is best used to reference OST beatmaps. |
+| `0` | Uses a [BeatSaver key](#beatsaver-key-format) to reference a beatmap |
+| `1` | Uses a [Beatmap hash](#beatmap-hash-format) to reference a beatmap |
+| `2` | Embeds a [Beatmap zip](#beatmap-zips) in the playlist |
+| `3` | Uses a Level ID to reference a beatmap.<br />For custom beatmaps this is derived from the hash, so it is preferred to use `hash`<br />This is best used to reference OST beatmaps. |
 
 The enum system was adopted to enable the extension of this specification to add more map referencing systems. **Additional types may be added at a later date.**
 
@@ -42,7 +42,7 @@ BeatSaver keys are integers. They use a lowercased hex-encoded representation on
 To convert from old to new, take the last number in the old key (after the `-`).
 
 ### Beatmap Hash Format
-Beatmap hashes are calculated using the `sha1` hashing algorithm. Therefore, they are always 20 bytes long.
+Beatmap hashes are calculated using the `sha1` hashing algorithm.
 
 To calculate beatmap hashes, concatenate `info.dat` and every difficulty `.dat` in the order they appear in `info.dat`, then hash those concatenated bytes.
 
