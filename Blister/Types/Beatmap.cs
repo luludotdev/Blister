@@ -24,7 +24,7 @@ namespace Blister.Types
         /// BeatSaver Key
         /// </summary>
         [JsonProperty("key", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Key { get; set; }
+        public uint? Key { get; set; }
 
         /// <summary>
         /// Beatmap sha1sum

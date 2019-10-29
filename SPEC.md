@@ -18,9 +18,9 @@ The extension for playlist files is `.blist`
 ### Beatmap
 | Key | Type | Extra Info |
 | - | - | - |
-| `type` | `int enum` | See [Beatmap Types](#beatmap-types) for valid enum values |
+| `type` | `uint enum` | See [Beatmap Types](#beatmap-types) for valid enum values |
 | `dateAdded` | `date` | Date when this map was added to the playlist |
-| `key` | `int` | Only present when `type == "key"` |
+| `key` | `uint` | Only present when `type == "key"` |
 | `hash` | `byte[20]` | Only present when `type == "hash"` |
 | `bytes` | `binary` | Only present when `type == "zip"` |
 | `levelID` | `string` | Only present when `type == "levelID"` |
