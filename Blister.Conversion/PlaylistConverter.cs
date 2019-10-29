@@ -56,24 +56,26 @@ namespace Blister.Conversion
 
                 if (song.Hash != null)
                 {
-                    map.Type = "hash";
+                    map.Type = BeatmapType.Hash;
 
                     string hash = song.Hash.ToLower();
                     bool isValid = Utils.ValidHash(hash);
                     if (!isValid) throw new InvalidMapHashException(hash);
 
-                    map.Hash = song.Hash.ToLower();
+                    map.Hash = Utils.StringToByteArray(hash);
                 }
                 else if (song.Key != null)
                 {
-                    map.Type = "key";
+                    map.Type = BeatmapType.Key;
 
                     string key = Utils.ParseKey(song.Key);
-                    map.Key = key ?? throw new InvalidMapKeyException(song.Key);
+                    if (key == null) throw new InvalidMapKeyException(song.Key);
+
+                    map.Key = uint.Parse(key);
                 }
                 else if (song.LevelID != null)
                 {
-                    map.Type = "levelID";
+                    map.Type = BeatmapType.LevelID;
                     map.LevelID = song.LevelID;
                 }
 

@@ -18,31 +18,31 @@ The extension for playlist files is `.blist`
 ### Beatmap
 | Key | Type | Extra Info |
 | - | - | - |
-| `type` | `string enum` | See [Beatmap Types](#beatmap-types) for valid enum values |
+| `type` | `uint enum` | See [Beatmap Types](#beatmap-types) for valid enum values |
 | `dateAdded` | `date` | Date when this map was added to the playlist |
-| `key` | `string` | Only present when `type == "key"` |
-| `hash` | `string` | Only present when `type == "hash"` |
+| `key` | `uint` | Only present when `type == "key"` |
+| `hash` | `byte[20]` | Only present when `type == "hash"` |
 | `bytes` | `binary` | Only present when `type == "zip"` |
 | `levelID` | `string` | Only present when `type == "levelID"` |
 
 ### Beatmap Types
 | Type | Usage |
 | - | - |
-| `key` | Uses a [BeatSaver key](#beatsaver-key-format) to reference a beatmap |
-| `hash` | Uses a [Beatmap hash](#beatmap-hash-format) to reference a beatmap |
-| `zip` | Embeds a [Beatmap zip](#beatmap-zips) in the playlist |
-| `levelID` | Uses a Level ID to reference a beatmap.<br />For custom beatmaps this is derived from the hash, so it is preferred to use `hash`<br />This is best used to reference OST beatmaps. |
+| `0` | Uses a [BeatSaver key](#beatsaver-key-format) to reference a beatmap |
+| `1` | Uses a [Beatmap hash](#beatmap-hash-format) to reference a beatmap |
+| `2` | Embeds a [Beatmap zip](#beatmap-zips) in the playlist |
+| `3` | Uses a Level ID to reference a beatmap.<br />For custom beatmaps this is derived from the hash, so it is preferred to use `hash`<br />This is best used to reference OST beatmaps. |
 
 The enum system was adopted to enable the extension of this specification to add more map referencing systems. **Additional types may be added at a later date.**
 
 ## Addendum
 ### BeatSaver Key Format
-BeatSaver keys are lowercased hex-encoded integers. When converting from old playlists, you may encounter old BeatSaver keys in the format `XXX-XXX` where `X` represents a decimal digit.
+BeatSaver keys are integers. They use a lowercased hex-encoded representation on BeatSaver. When converting from old playlists, you may encounter old BeatSaver keys in the format `XXX-XXX` where `X` represents a decimal digit.
 
-To convert from old to new, take the last number in the old key (after the `-`) and convert from decimal to hex.
+To convert from old to new, take the last number in the old key (after the `-`).
 
 ### Beatmap Hash Format
-Beatmap hashes are calculated using the `sha1` hashing algorithm, in lowercased hex format.
+Beatmap hashes are calculated using the `sha1` hashing algorithm.
 
 To calculate beatmap hashes, concatenate `info.dat` and every difficulty `.dat` in the order they appear in `info.dat`, then hash those concatenated bytes.
 
