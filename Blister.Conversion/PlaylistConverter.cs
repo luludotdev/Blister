@@ -52,7 +52,10 @@ namespace Blister.Conversion
 
             foreach (var song in legacy.Songs)
             {
-                Beatmap map = new Beatmap();
+                Beatmap map = new Beatmap()
+                {
+                    DateAdded = DateTime.Now,
+                };
 
                 if (song.Hash != null)
                 {
