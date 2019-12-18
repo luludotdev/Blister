@@ -71,7 +71,7 @@ namespace Blister.Conversion
                     string key = Utils.ParseKey(song.Key);
                     if (key == null) throw new InvalidMapKeyException(song.Key);
 
-                    map.Key = uint.Parse(key);
+                    map.Key = Convert.ToUInt32(key, 16);
                 }
                 else if (song.LevelID != null)
                 {
