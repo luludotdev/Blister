@@ -14,25 +14,46 @@ namespace BlisterLoader
                 ExitMessage("Please drag a .bplist file onto this .exe", 1);
             }
 
-            string path = args[0];
-            bool fileExists = File.Exists(path);
-            if (!fileExists)
+            bool success = true;
+            foreach (string path in args)
             {
-                ExitMessage("The specified file does not exist!", 1);
+                bool status = ConvertFile(path);
+                if (status == false) success = false;
+            }
+
+            if (success == false) Console.ReadLine();
+        }
+
+        static bool ConvertFile(string path)
+        {
+            bool fileExists = File.Exists(path);
+            if (fileExists == false)
+            {
+                Console.WriteLine($"File \"{path}\" does not exist");
+                return false;
             }
 
             string text = File.ReadAllText(path);
-            var legacy = PlaylistConverter.DeserializeLegacyPlaylist(text);
-            var playlist = PlaylistConverter.ConvertLegacyPlaylist(legacy);
-
-            string newPath = path.Replace(".bplist", ".blist");
-            using (FileStream fs = File.Open(newPath, FileMode.OpenOrCreate))
+            try
             {
+                var legacy = PlaylistConverter.DeserializeLegacyPlaylist(text);
+                var playlist = PlaylistConverter.ConvertLegacyPlaylist(legacy);
+
+                string newPath = path.Replace(".bplist", ".blist").Replace(".json", ".blist");
+                using (FileStream fs = File.Open(newPath, FileMode.OpenOrCreate))
                 using (MemoryStream ms = PlaylistLib.SerializeStream(playlist))
                 {
                     ms.CopyTo(fs);
                     fs.Flush();
+
+                    return true;
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Exception in {path}");
+                Console.WriteLine(ex.ToString());
+                return false;
             }
         }
 
