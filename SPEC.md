@@ -1,8 +1,8 @@
 # Playlist File Format - Technical Specifications
 
 ## File Encoding
-The playlist data is serialized using [BSON](http://bsonspec.org/), and then compressed using the [GZip](https://www.gzip.org/) format.  
-Before the GZipped data is the file's Magic Number, 8 bytes that are UTF-8 (or ASCII) encoded text `Blist.v2`  
+The playlist data is serialized using [BSON](http://bsonspec.org/), and then compressed using the [GZip](https://www.gzip.org/) format.
+Before the GZipped data is the file's Magic Number, 8 bytes that are UTF-8 (or ASCII) encoded text `Blist.v2`
 The extension for playlist files is `.blist`
 
 ## BSON Structure
@@ -12,7 +12,7 @@ The extension for playlist files is `.blist`
 | `title` | `string` | n/a |
 | `author` | `string` | n/a |
 | `description` | `string,null` | n/a |
-| `cover` | `binary` | Can be PNG / JPEG, should be 1:1 aspect ratio |
+| `cover` | `binary,null` | Can be PNG / JPEG, should be 1:1 aspect ratio |
 | `maps` | `Beatmap[]` | See [Beatmap](#beatmap) for structure |
 
 ### Beatmap
