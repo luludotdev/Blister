@@ -7,7 +7,7 @@ namespace Blister.Types
     /// <summary>
     /// Playlist data structure
     /// </summary>
-    public struct Playlist
+    public class Playlist
     {
         /// <summary>
         /// Playlist title

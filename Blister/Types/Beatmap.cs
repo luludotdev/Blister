@@ -6,7 +6,7 @@ namespace Blister.Types
     /// <summary>
     /// Playlist Beatmap
     /// </summary>
-    public struct Beatmap
+    public class Beatmap
     {
         /// <summary>
         /// Beatmap type

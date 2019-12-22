@@ -6,7 +6,7 @@ namespace Blister.Conversion.Types
     /// <summary>
     /// Legacy playlist beatmap
     /// </summary>
-    public struct LegacySong
+    public class LegacySong
     {
         /// <summary>
         /// BeatSaver Key
