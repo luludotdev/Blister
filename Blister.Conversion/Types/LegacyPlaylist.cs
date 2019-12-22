@@ -6,7 +6,7 @@ namespace Blister.Conversion.Types
     /// <summary>
     /// Legacy (v1) Playlist struct
     /// </summary>
-    public struct LegacyPlaylist
+    public class LegacyPlaylist
     {
         /// <summary>
         /// Legacy playlist title
