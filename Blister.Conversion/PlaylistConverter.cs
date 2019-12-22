@@ -37,18 +37,32 @@ namespace Blister.Conversion
         /// Convert a legacy playlist to a v2 playlist struct
         /// </summary>
         /// <param name="legacy">Legacy playlist</param>
+        /// <param name="flags">Flags used to control conversion logic</param>
         /// <returns></returns>
-        public static Playlist ConvertLegacyPlaylist(LegacyPlaylist legacy)
+        public static Playlist ConvertLegacyPlaylist(LegacyPlaylist legacy, ConversionFlags flags = ConversionFlags.Default)
         {
+            bool ignoreInvalidHashes = FlagUtils.HasFlag(flags, ConversionFlags.IgnoreInvalidHashes);
+            bool ignoreInvalidKeys = FlagUtils.HasFlag(flags, ConversionFlags.IgnoreInvalidKeys);
+            bool ignoreInvalidCover = FlagUtils.HasFlag(flags, ConversionFlags.IgnoreInvalidCover);
+
             Playlist playlist = new Playlist
             {
                 Title = legacy.PlaylistTitle,
                 Author = legacy.PlaylistAuthor,
                 Description = legacy.PlaylistDescription,
 
-                Cover = Utils.ParseBase64Image(legacy.Image),
                 Maps = new List<Beatmap>()
             };
+
+            try
+            {
+                playlist.Cover = Utils.ParseBase64Image(legacy.Image);
+            }
+            catch (InvalidBase64Exception ex)
+            {
+                if (ignoreInvalidCover) playlist.Cover = null;
+                else throw ex;
+            }
 
             foreach (var song in legacy.Songs)
             {
@@ -63,7 +77,12 @@ namespace Blister.Conversion
 
                     string hash = song.Hash.ToLower();
                     bool isValid = Utils.ValidHash(hash);
-                    if (!isValid) throw new InvalidMapHashException(hash);
+
+                    if (isValid == false)
+                    {
+                        if (ignoreInvalidHashes) continue;
+                        else throw new InvalidMapHashException(hash);
+                    }
 
                     map.Hash = Utils.StringToByteArray(hash);
                 }
@@ -72,7 +91,11 @@ namespace Blister.Conversion
                     map.Type = BeatmapType.Key;
 
                     string key = Utils.ParseKey(song.Key);
-                    if (key == null) throw new InvalidMapKeyException(song.Key);
+                    if (key == null)
+                    {
+                        if (ignoreInvalidKeys) continue;
+                        else throw new InvalidMapKeyException(song.Key);
+                    }
 
                     map.Key = Convert.ToUInt32(key, 16);
                 }
