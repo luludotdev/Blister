@@ -46,4 +46,24 @@ namespace Blister.Conversion
         /// </summary>
         public string Hash;
     }
+
+    /// <summary>
+    /// Raised when a converted cover is valid base64 but not a PNG or JPEG
+    /// </summary>
+    public class InvalidCoverException : Exception
+    {
+        /// <summary>
+        /// Instantiate a new InvalidCoverException
+        /// </summary>
+        /// <param name="mimeType">Detected MIME type</param>
+        public InvalidCoverException(string mimeType)
+        {
+            MimeType = mimeType;
+        }
+
+        /// <summary>
+        /// Detected MIME type
+        /// </summary>
+        public string MimeType;
+    }
 }

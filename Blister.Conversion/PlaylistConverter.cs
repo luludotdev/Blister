@@ -56,7 +56,15 @@ namespace Blister.Conversion
 
             try
             {
-                playlist.Cover = Utils.ParseBase64Image(legacy.Image);
+                byte[] cover = Utils.ParseBase64Image(legacy.Image);
+                string mimeType = MimeType.GetMimeType(cover);
+
+                if (mimeType != MimeType.PNG && mimeType != MimeType.JPG)
+                {
+                    throw new InvalidCoverException(mimeType);
+                }
+
+                playlist.Cover = cover;
             }
             catch (InvalidBase64Exception ex)
             {
