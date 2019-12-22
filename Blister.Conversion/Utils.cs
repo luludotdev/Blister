@@ -9,7 +9,7 @@ namespace Blister.Conversion
         internal static Regex oldKeyRX = new Regex(@"^\d+-(\d+)$", RegexOptions.Compiled);
         internal static Regex newKeyRX = new Regex(@"^[0-9a-f]+$", RegexOptions.Compiled);
 
-        internal static Regex base64RX = new Regex(@"^.+base64,(.+)$", RegexOptions.Compiled);
+        internal static Regex base64RX = new Regex(@"^(?:data:\w+\/\w+;base64,)?((?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?)$", RegexOptions.Compiled);
         internal static Regex sha1RX = new Regex(@"^[0-9a-f]{40}$", RegexOptions.Compiled);
 
         internal static string ParseKey(string key)
@@ -36,8 +36,15 @@ namespace Blister.Conversion
                 throw new InvalidBase64Exception();
             }
 
-            string base64 = match.Groups[1].Value;
-            return Convert.FromBase64String(base64);
+            try
+            {
+                string base64 = match.Groups[1].Value;
+                return Convert.FromBase64String(base64);
+            }
+            catch (FormatException)
+            {
+                throw new InvalidBase64Exception();
+            }
         }
 
         internal static bool ValidHash(string hash)
