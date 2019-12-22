@@ -12,10 +12,12 @@ jobs:
       run: msbuild -t:restore
     - name: Build solution
       run: msbuild Blister.sln /t:Build /p:Configuration=Release /m
-    - name: Cleanup releases
+    - name: Prepare artifact
       shell: bash
-      run: find "Blister.Conversion/bin/Release" -type f ! -name "Blister.*" -delete
-    - name: Upload Blister
+      run: |
+        find "Blister.Conversion/bin/Release" -type f ! -name "Blister.*" -delete
+        cp "LICENSE" "Blister.Conversion/bin/Release/LICENSE.Blister.txt"
+    - name: Upload DLLs
       uses: actions/upload-artifact@v1
       with:
         name: Blister-${{ github.sha }}
