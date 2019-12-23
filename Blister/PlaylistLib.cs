@@ -62,15 +62,11 @@ namespace Blister
         public static Playlist Deserialize(Stream stream)
         {
             using (Stream magic = ReadMagicNumber(stream))
+            using (GZipStream gzip = new GZipStream(magic, CompressionMode.Decompress))
+            using (BsonDataReader reader = new BsonDataReader(gzip))
             {
-                using (GZipStream gzip = new GZipStream(magic, CompressionMode.Decompress))
-                {
-                    using (BsonDataReader reader = new BsonDataReader(gzip))
-                    {
-                        JsonSerializer serializer = new JsonSerializer();
-                        return serializer.Deserialize<Playlist>(reader);
-                    }
-                }
+                JsonSerializer serializer = new JsonSerializer();
+                return serializer.Deserialize<Playlist>(reader);
             }
         }
 
@@ -95,20 +91,16 @@ namespace Blister
         public static MemoryStream SerializeStream(Playlist playlist)
         {
             using (MemoryStream ms = new MemoryStream())
+            using (GZipStream gzip = new GZipStream(ms, CompressionMode.Compress))
+            using (BsonDataWriter writer = new BsonDataWriter(gzip))
             {
-                using (GZipStream gzip = new GZipStream(ms, CompressionMode.Compress))
-                {
-                    using (BsonDataWriter writer = new BsonDataWriter(gzip))
-                    {
-                        JsonSerializer serializer = new JsonSerializer();
-                        serializer.Serialize(writer, playlist);
-                    }
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(writer, playlist);
 
-                    byte[] gzipped = ms.ToArray();
-                    byte[] full = MagicNumber.Concat(gzipped).ToArray();
+                byte[] gzipped = ms.ToArray();
+                byte[] full = MagicNumber.Concat(gzipped).ToArray();
 
-                    return new MemoryStream(full);
-                }
+                return new MemoryStream(full);
             }
         }
     }
