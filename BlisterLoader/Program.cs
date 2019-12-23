@@ -33,27 +33,29 @@ namespace BlisterLoader
                 return false;
             }
 
-            string text = File.ReadAllText(path);
-            try
+            using (StreamReader file = File.OpenText(path))
             {
-                var legacy = PlaylistConverter.DeserializeLegacyPlaylist(text);
-                var playlist = PlaylistConverter.ConvertLegacyPlaylist(legacy);
-
-                string newPath = path.Replace(".bplist", ".blist").Replace(".json", ".blist");
-                using (FileStream fs = File.Open(newPath, FileMode.OpenOrCreate))
-                using (MemoryStream ms = PlaylistLib.SerializeStream(playlist))
+                try
                 {
-                    ms.CopyTo(fs);
-                    fs.Flush();
+                    var legacy = PlaylistConverter.DeserializeLegacyPlaylist(file);
+                    var playlist = PlaylistConverter.ConvertLegacyPlaylist(legacy);
 
-                    return true;
+                    string newPath = path.Replace(".bplist", ".blist").Replace(".json", ".blist");
+                    using (FileStream fs = File.Open(newPath, FileMode.OpenOrCreate))
+                    using (MemoryStream ms = PlaylistLib.SerializeStream(playlist))
+                    {
+                        ms.CopyTo(fs);
+                        fs.Flush();
+
+                        return true;
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Exception in {path}");
-                Console.WriteLine(ex.ToString());
-                return false;
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Exception in {path}");
+                    Console.WriteLine(ex.ToString());
+                    return false;
+                }
             }
         }
 

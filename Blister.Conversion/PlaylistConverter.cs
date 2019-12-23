@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using Newtonsoft.Json;
 using Blister.Types;
@@ -12,6 +13,8 @@ namespace Blister.Conversion
     /// </summary>
     public static class PlaylistConverter
     {
+        internal static JsonSerializer _serializer = new JsonSerializer();
+
         /// <summary>
         /// Deserialize legacy playlist JSON
         /// </summary>
@@ -19,8 +22,10 @@ namespace Blister.Conversion
         /// <returns></returns>
         public static LegacyPlaylist DeserializeLegacyPlaylist(byte[] bytes)
         {
-            string text = Encoding.UTF8.GetString(bytes, 0, bytes.Length);
-            return DeserializeLegacyPlaylist(text);
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                return DeserializeLegacyPlaylist(ms);
+            }
         }
 
         /// <summary>
@@ -30,7 +35,36 @@ namespace Blister.Conversion
         /// <returns></returns>
         public static LegacyPlaylist DeserializeLegacyPlaylist(string text)
         {
-            return JsonConvert.DeserializeObject<LegacyPlaylist>(text);
+            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(text)))
+            {
+                return DeserializeLegacyPlaylist(ms);
+            }
+        }
+
+        /// <summary>
+        /// Deserialize legacy playlist JSON
+        /// </summary>
+        /// <param name="stream">Legacy playlist JSON stream</param>
+        /// <returns></returns>
+        public static LegacyPlaylist DeserializeLegacyPlaylist(Stream stream)
+        {
+            using (StreamReader sr = new StreamReader(stream))
+            {
+                return DeserializeLegacyPlaylist(sr);
+            }
+        }
+
+        /// <summary>
+        /// Deserialize legacy playlist JSON
+        /// </summary>
+        /// <param name="reader">Legacy playlist JSON stream reader</param>
+        /// <returns></returns>
+        public static LegacyPlaylist DeserializeLegacyPlaylist(StreamReader reader)
+        {
+            using (JsonReader r = new JsonTextReader(reader))
+            {
+                return _serializer.Deserialize<LegacyPlaylist>(r);
+            }
         }
 
         /// <summary>
