@@ -14,6 +14,7 @@ namespace Blister
     /// </summary>
     public static class PlaylistLib
     {
+        private static readonly JsonSerializer serializer = new JsonSerializer();
         private static readonly string MagicNumberString = "Blist.v2";
 
         /// <summary>
@@ -65,7 +66,6 @@ namespace Blister
             using (GZipStream gzip = new GZipStream(magic, CompressionMode.Decompress))
             using (BsonDataReader reader = new BsonDataReader(gzip))
             {
-                JsonSerializer serializer = new JsonSerializer();
                 return serializer.Deserialize<Playlist>(reader);
             }
         }
@@ -94,7 +94,6 @@ namespace Blister
             using (GZipStream gzip = new GZipStream(ms, CompressionMode.Compress))
             using (BsonDataWriter writer = new BsonDataWriter(gzip))
             {
-                JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(writer, playlist);
 
                 byte[] gzipped = ms.ToArray();
