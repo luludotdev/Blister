@@ -5,20 +5,28 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup MSBuild
-      uses: warrenbuckley/Setup-MSBuild@v1
+    - uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.100'
+    - name: Setup NuGet
+      uses: warrenbuckley/Setup-Nuget@v1
     - name: Install dependencies
-      run: msbuild -t:restore
+      run: dotnet restore
     - name: Build solution
-      run: msbuild Blister.sln /t:Build /p:Configuration=Release /m
+      run: dotnet build -c release Blister.Conversion/Blister.Conversion.csproj
     - name: Prepare artifact
+      if: contains(github.ref, 'refs/tags/') == false
       shell: bash
       run: |
-        find "Blister.Conversion/bin/Release" -type f ! -name "Blister.*" -delete
-        cp "LICENSE" "Blister.Conversion/bin/Release/LICENSE.Blister.txt"
+        find "Blister.Conversion/bin/Release/netstandard2.0" -type f ! -name "Blister.*" -delete
+        find "Blister.Conversion/bin/Release/netstandard2.0" -type f -name "*.deps.json" -delete
+        cp "LICENSE" "Blister.Conversion/bin/Release/netstandard2.0/LICENSE.Blister.txt"
     - name: Upload DLLs
+      if: contains(github.ref, 'refs/tags/') == false
       uses: actions/upload-artifact@v1
       with:
         name: Blister-${{ github.sha }}
-        path: ./Blister.Conversion/bin/Release
+        path: ./Blister.Conversion/bin/Release/netstandard2.0
+    - name: Publish to NuGet
+      if: contains(github.ref, 'refs/tags/') == true
+      run: nuget push -SkipDuplicate -ApiKey ${{ secrets.NUGET_KEY }} -Source https://api.nuget.org/v3/index.json **\*.nupkg

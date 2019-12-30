@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <PublishTrimmed>true</PublishTrimmed>
+    <PublishReadyToRun>true</PublishReadyToRun>
+    <Version>1.0.0</Version>
+    <Authors>lolPants</Authors>
+    <Company>Jack Baron DEV</Company>
+    <Description>Beat Saber playlist conversion tool</Description>
+    <Copyright>Copyright © Jack Baron DEV 2019</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/lolPants/Blister</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/lolPants/Blister.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>beat saber playlist json bson converter convert tool</PackageTags>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+    <StartupObject>BlisterLoader.Program</StartupObject>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blister.Conversion\Blister.Conversion.csproj" />
+    <ProjectReference Include="..\Blister\Blister.csproj" />
+  </ItemGroup>
+
+</Project>

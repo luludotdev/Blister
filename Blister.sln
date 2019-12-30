@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29215.179
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blister", "Blister\Blister.csproj", "{1555B0D2-112F-4501-9E65-7692E9920322}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blister", "Blister\Blister.csproj", "{FEF19008-6834-4EEA-9566-9D2F24B0AD1E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blister.Conversion", "Blister.Conversion\Blister.Conversion.csproj", "{BE35DBC0-A6AC-41C2-875C-FD43E5335586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blister.Conversion", "Blister.Conversion\Blister.Conversion.csproj", "{984365BA-3BD9-4836-81EA-C52BD77E4CA3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlisterLoader", "BlisterLoader\BlisterLoader.csproj", "{2E2454A3-47B7-4E30-B6FD-2508DC84592C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaylistConverter", "PlaylistConverter\PlaylistConverter.csproj", "{BF01524D-5072-4FC5-ABFB-84E18DCDC808}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,18 +14,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{1555B0D2-112F-4501-9E65-7692E9920322}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1555B0D2-112F-4501-9E65-7692E9920322}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1555B0D2-112F-4501-9E65-7692E9920322}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1555B0D2-112F-4501-9E65-7692E9920322}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BE35DBC0-A6AC-41C2-875C-FD43E5335586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE35DBC0-A6AC-41C2-875C-FD43E5335586}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE35DBC0-A6AC-41C2-875C-FD43E5335586}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE35DBC0-A6AC-41C2-875C-FD43E5335586}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E2454A3-47B7-4E30-B6FD-2508DC84592C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E2454A3-47B7-4E30-B6FD-2508DC84592C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E2454A3-47B7-4E30-B6FD-2508DC84592C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E2454A3-47B7-4E30-B6FD-2508DC84592C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEF19008-6834-4EEA-9566-9D2F24B0AD1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEF19008-6834-4EEA-9566-9D2F24B0AD1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEF19008-6834-4EEA-9566-9D2F24B0AD1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEF19008-6834-4EEA-9566-9D2F24B0AD1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{984365BA-3BD9-4836-81EA-C52BD77E4CA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{984365BA-3BD9-4836-81EA-C52BD77E4CA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{984365BA-3BD9-4836-81EA-C52BD77E4CA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{984365BA-3BD9-4836-81EA-C52BD77E4CA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF01524D-5072-4FC5-ABFB-84E18DCDC808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF01524D-5072-4FC5-ABFB-84E18DCDC808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF01524D-5072-4FC5-ABFB-84E18DCDC808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF01524D-5072-4FC5-ABFB-84E18DCDC808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
