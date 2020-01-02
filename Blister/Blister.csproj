@@ -19,11 +19,11 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>C:\Users\Jack Baron\source\repos\Blister\Blister\Blister.xml</DocumentationFile>
+    <DocumentationFile>.\Blister.xml</DocumentationFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DocumentationFile>C:\Users\Jack Baron\source\repos\Blister\Blister\Blister.xml</DocumentationFile>
+    <DocumentationFile>.\Blister.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

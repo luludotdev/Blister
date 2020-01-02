@@ -261,5 +261,5 @@ __pycache__/
 *.pyc
 
 # XML Doc
-Blister.xml
-Blister.Conversion.xml
+Blister/Blister.xml
+Blister.Conversion/Blister.Conversion.xml
