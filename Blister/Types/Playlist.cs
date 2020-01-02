@@ -32,7 +32,7 @@ namespace Blister.Types
         /// <summary>
         /// Playlist cover image as bytes
         /// </summary>
-        [JsonProperty("cover")]
+        [JsonProperty("cover", NullValueHandling = NullValueHandling.Include)]
         public byte[] Cover { get; set; }
 
         /// <summary>

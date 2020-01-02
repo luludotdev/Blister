@@ -25,7 +25,7 @@ namespace Blister
         public static readonly byte[] MagicNumber = Encoding.UTF8.GetBytes(MagicNumberString);
 
         /// <summary>
-        /// Deserialize BSON bytes to a Playlist struct 
+        /// Deserialize BSON bytes to a Playlist struct
         /// </summary>
         /// <param name="bytes">BSON bytes</param>
         /// <returns></returns>
@@ -56,7 +56,7 @@ namespace Blister
         }
 
         /// <summary>
-        /// Deserialize a BSON byte stream to a Playlist struct 
+        /// Deserialize a BSON byte stream to a Playlist struct
         /// </summary>
         /// <param name="stream">Byte Stream</param>
         /// <returns></returns>
@@ -77,8 +77,9 @@ namespace Blister
         /// <returns></returns>
         public static byte[] Serialize(Playlist playlist)
         {
-            using (MemoryStream ms = SerializeStream(playlist))
+            using (MemoryStream ms = new MemoryStream())
             {
+                SerializeStream(playlist, ms);
                 return ms.ToArray();
             }
         }
@@ -87,19 +88,16 @@ namespace Blister
         /// Serialize a playlist struct to a Memory Stream
         /// </summary>
         /// <param name="playlist">Playlist struct</param>
+        /// <param name="stream">Stream to write to</param>
         /// <returns></returns>
-        public static MemoryStream SerializeStream(Playlist playlist)
+        public static void SerializeStream(Playlist playlist, Stream stream)
         {
-            using (MemoryStream ms = new MemoryStream())
-            using (GZipStream gzip = new GZipStream(ms, CompressionMode.Compress))
+            stream.Write(MagicNumber, 0, MagicNumber.Length);
+
+            using (GZipStream gzip = new GZipStream(stream, CompressionMode.Compress))
             using (BsonDataWriter writer = new BsonDataWriter(gzip))
             {
                 serializer.Serialize(writer, playlist);
-
-                byte[] gzipped = ms.ToArray();
-                byte[] full = MagicNumber.Concat(gzipped).ToArray();
-
-                return new MemoryStream(full);
             }
         }
     }

@@ -41,13 +41,11 @@ namespace BlisterLoader
                     var playlist = PlaylistConverter.ConvertLegacyPlaylist(legacy);
 
                     string newPath = path.Replace(".bplist", ".blist").Replace(".json", ".blist");
-                    using FileStream fs = File.Open(newPath, FileMode.OpenOrCreate);
-                    using MemoryStream ms = PlaylistLib.SerializeStream(playlist);
-
-                    ms.CopyTo(fs);
-                    fs.Flush();
-
-                    return true;
+                    using (FileStream fs = File.Open(newPath, FileMode.OpenOrCreate))
+                    {
+                        PlaylistLib.SerializeStream(playlist, fs);
+                        return true;
+                    }
                 }
                 catch (Exception ex)
                 {
