@@ -22,10 +22,8 @@ namespace Blister.Conversion
         /// <returns></returns>
         public static LegacyPlaylist DeserializeLegacyPlaylist(byte[] bytes)
         {
-            using (MemoryStream ms = new MemoryStream(bytes))
-            {
-                return DeserializeLegacyPlaylist(ms);
-            }
+            using var ms = new MemoryStream(bytes);
+            return DeserializeLegacyPlaylist(ms);
         }
 
         /// <summary>
@@ -35,10 +33,8 @@ namespace Blister.Conversion
         /// <returns></returns>
         public static LegacyPlaylist DeserializeLegacyPlaylist(string text)
         {
-            using (MemoryStream ms = new MemoryStream(Encoding.UTF8.GetBytes(text)))
-            {
-                return DeserializeLegacyPlaylist(ms);
-            }
+            using var ms = new MemoryStream(Encoding.UTF8.GetBytes(text));
+            return DeserializeLegacyPlaylist(ms);
         }
 
         /// <summary>
@@ -48,10 +44,8 @@ namespace Blister.Conversion
         /// <returns></returns>
         public static LegacyPlaylist DeserializeLegacyPlaylist(Stream stream)
         {
-            using (StreamReader sr = new StreamReader(stream))
-            {
-                return DeserializeLegacyPlaylist(sr);
-            }
+            using var sr = new StreamReader(stream);
+            return DeserializeLegacyPlaylist(sr);
         }
 
         /// <summary>
@@ -61,10 +55,8 @@ namespace Blister.Conversion
         /// <returns></returns>
         public static LegacyPlaylist DeserializeLegacyPlaylist(StreamReader reader)
         {
-            using (JsonReader r = new JsonTextReader(reader))
-            {
-                return _serializer.Deserialize<LegacyPlaylist>(r);
-            }
+            using var r = new JsonTextReader(reader);
+            return _serializer.Deserialize<LegacyPlaylist>(r);
         }
 
         /// <summary>

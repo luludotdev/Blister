@@ -31,10 +31,8 @@ namespace Blister
         /// <returns></returns>
         public static Playlist Deserialize(byte[] bytes)
         {
-            using (MemoryStream ms = new MemoryStream(bytes))
-            {
-                return Deserialize(ms);
-            }
+            using var ms = new MemoryStream(bytes);
+            return Deserialize(ms);
         }
 
         private static Stream ReadMagicNumber(Stream stream)
@@ -77,11 +75,10 @@ namespace Blister
         /// <returns></returns>
         public static byte[] Serialize(Playlist playlist)
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                SerializeStream(playlist, ms);
-                return ms.ToArray();
-            }
+            using var ms = new MemoryStream();
+            SerializeStream(playlist, ms);
+
+            return ms.ToArray();
         }
 
         /// <summary>
