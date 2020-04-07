@@ -41,6 +41,7 @@ namespace BlisterLoader
 
                 string newPath = path.Replace(".bplist", ".blist").Replace(".json", ".blist");
                 using var fs = File.Open(newPath, FileMode.OpenOrCreate);
+                fs.SetLength(0);
 
                 PlaylistLib.SerializeStream(playlist, fs);
                 return true;
