@@ -6,7 +6,7 @@ namespace Blister.IO
 {
     internal class BlisterBinaryWriter : BinaryWriter
     {
-        public BlisterBinaryWriter(Stream output) : base(output, PlaylistLib.Encoding)
+        public BlisterBinaryWriter(GZipStream output) : base(output, PlaylistLib.Encoding)
         {
             if (BitConverter.IsLittleEndian != PlaylistLib.LittleEndian)
             {

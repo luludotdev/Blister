@@ -28,9 +28,9 @@ namespace Blister.IO
 
         public uint? ReadOptionalUInt32()
         {
-            var isNull = ReadBoolean();
+            var isSet = ReadBoolean();
 
-            if (isNull) return null;
+            if (isSet == false) return null;
             else return ReadUInt32();
         }
 
