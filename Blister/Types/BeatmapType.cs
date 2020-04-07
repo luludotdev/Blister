@@ -5,7 +5,7 @@ namespace Blister.Types
     /// <summary>
     /// Playlist Beatmap Type
     /// </summary>
-    public enum BeatmapType : uint
+    public enum BeatmapType : byte
     {
         /// <summary>
         /// BeatSaver Key

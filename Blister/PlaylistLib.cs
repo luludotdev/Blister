@@ -3,8 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
+using Blister.IO;
 using Blister.Types;
 
 namespace Blister
@@ -14,20 +13,21 @@ namespace Blister
     /// </summary>
     public static class PlaylistLib
     {
-        private static readonly JsonSerializer serializer = new JsonSerializer();
-        private static readonly string MagicNumberString = "Blist.v2";
+        internal const string MagicNumberString = "Blist.v3";
+        internal const bool LittleEndian = true;
+        internal static readonly Encoding Encoding = Encoding.UTF8;
 
         /// <summary>
         /// Blister format Magic Number
         /// <br />
-        /// UTF-8 Encoded "Blist.v2"
+        /// UTF-8 Encoded "Blist.v3"
         /// </summary>
         public static readonly byte[] MagicNumber = Encoding.UTF8.GetBytes(MagicNumberString);
 
         /// <summary>
-        /// Deserialize BSON bytes to a Playlist struct
+        /// Deserialize bytes to a Playlist struct
         /// </summary>
-        /// <param name="bytes">BSON bytes</param>
+        /// <param name="bytes">Bytes</param>
         /// <returns></returns>
         public static Playlist Deserialize(byte[] bytes)
         {
@@ -45,7 +45,7 @@ namespace Blister
             }
 
             bool hasMagicNumber = magicBytes.SequenceEqual(MagicNumber);
-            if (!hasMagicNumber)
+            if (hasMagicNumber == false)
             {
                 throw new InvalidMagicNumberException();
             }
@@ -54,18 +54,17 @@ namespace Blister
         }
 
         /// <summary>
-        /// Deserialize a BSON byte stream to a Playlist struct
+        /// Deserialize a byte stream to a Playlist struct
         /// </summary>
         /// <param name="stream">Byte Stream</param>
         /// <returns></returns>
         public static Playlist Deserialize(Stream stream)
         {
-            using (Stream magic = ReadMagicNumber(stream))
-            using (GZipStream gzip = new GZipStream(magic, CompressionMode.Decompress))
-            using (BsonDataReader reader = new BsonDataReader(gzip))
-            {
-                return serializer.Deserialize<Playlist>(reader);
-            }
+            using var magic = ReadMagicNumber(stream);
+            using var gzip = new GZipStream(magic, CompressionMode.Decompress);
+            using var reader = new BlisterBinaryReader(gzip);
+
+            return new Playlist(reader);
         }
 
         /// <summary>
@@ -91,11 +90,10 @@ namespace Blister
         {
             stream.Write(MagicNumber, 0, MagicNumber.Length);
 
-            using (GZipStream gzip = new GZipStream(stream, CompressionMode.Compress))
-            using (BsonDataWriter writer = new BsonDataWriter(gzip))
-            {
-                serializer.Serialize(writer, playlist);
-            }
+            using var gzip = new GZipStream(stream, CompressionMode.Compress);
+            using var writer = new BlisterBinaryWriter(gzip);
+
+            playlist.Write(writer);
         }
     }
 }

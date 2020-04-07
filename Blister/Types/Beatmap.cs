@@ -1,5 +1,5 @@
 using System;
-using Newtonsoft.Json;
+using Blister.IO;
 
 namespace Blister.Types
 {
@@ -11,37 +11,67 @@ namespace Blister.Types
         /// <summary>
         /// Beatmap type
         /// </summary>
-        [JsonProperty("type")]
-        public BeatmapType Type { get; set; }
+        public BeatmapType Type;
 
         /// <summary>
         /// Date this entry was added to the playlist
         /// </summary>
-        [JsonProperty("dateAdded")]
-        public DateTime DateAdded { get; set; }
+        public DateTimeOffset DateAdded;
 
         /// <summary>
         /// BeatSaver Key
         /// </summary>
-        [JsonProperty("key", NullValueHandling = NullValueHandling.Ignore)]
-        public uint? Key { get; set; }
+        public uint? Key;
 
         /// <summary>
         /// Beatmap sha1sum
         /// </summary>
-        [JsonProperty("hash", NullValueHandling = NullValueHandling.Ignore)]
-        public byte[] Hash { get; set; }
+        public byte[]? Hash;
 
         /// <summary>
         /// Beatmap zip as bytes
         /// </summary>
-        [JsonProperty("bytes", NullValueHandling = NullValueHandling.Ignore)]
-        public byte[] Bytes { get; set; }
+        public byte[]? Bytes;
 
         /// <summary>
         /// Beatmap level ID
         /// </summary>
-        [JsonProperty("levelID", NullValueHandling = NullValueHandling.Ignore)]
-        public string LevelID { get; set; }
+        public string? LevelID;
+
+        /// <summary>
+        /// Construct a new Beatmap
+        /// </summary>
+        public Beatmap()
+        {
+            DateAdded = DateTimeOffset.Now;
+        }
+
+        /// <summary>
+        /// Reads a playlist from a stream
+        /// </summary>
+        /// <param name="reader">Binary Reader</param>
+        internal Beatmap(BlisterBinaryReader reader)
+        {
+            Type = (BeatmapType)reader.ReadByte();
+            DateAdded = reader.ReadDateTimeOffset();
+            Key = reader.ReadOptionalUInt32();
+            Hash = reader.ReadOptionalBytes();
+            Bytes = reader.ReadOptionalBytes();
+            LevelID = reader.ReadShortString();
+        }
+
+        /// <summary>
+        /// Writes the playlist to a stream
+        /// </summary>
+        /// <param name="writer">Binary Writer</param>
+        internal void Write(BlisterBinaryWriter writer)
+        {
+            writer.Write((byte)Type);
+            writer.WriteDateTimeOffset(DateAdded);
+            writer.WriteOptionalUInt32(Key);
+            writer.WriteBytes(Hash);
+            writer.WriteBytes(Bytes);
+            writer.WriteShortString(LevelID);
+        }
     }
 }
