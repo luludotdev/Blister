@@ -60,7 +60,7 @@ namespace Blister.Conversion
         }
 
         /// <summary>
-        /// Convert a legacy playlist to a v2 playlist struct
+        /// Convert a legacy playlist to a Blister playlist struct
         /// </summary>
         /// <param name="legacy">Legacy playlist</param>
         /// <param name="flags">Flags used to control conversion logic</param>
@@ -71,14 +71,7 @@ namespace Blister.Conversion
             bool ignoreInvalidKeys = FlagUtils.HasFlag(flags, ConversionFlags.IgnoreInvalidKeys);
             bool ignoreInvalidCover = FlagUtils.HasFlag(flags, ConversionFlags.IgnoreInvalidCover);
 
-            Playlist playlist = new Playlist
-            {
-                Title = legacy.PlaylistTitle,
-                Author = legacy.PlaylistAuthor,
-                Description = legacy.PlaylistDescription,
-
-                Maps = new List<Beatmap>()
-            };
+            Playlist playlist = new Playlist(legacy.PlaylistTitle, legacy.PlaylistAuthor, legacy.PlaylistDescription);
 
             try
             {
@@ -100,9 +93,9 @@ namespace Blister.Conversion
 
             foreach (var song in legacy.Songs)
             {
-                Beatmap map = new Beatmap()
+                Beatmap map = new Beatmap
                 {
-                    DateAdded = DateTime.Now,
+                    DateAdded = DateTimeOffset.Now,
                 };
 
                 if (song.Hash != null)
